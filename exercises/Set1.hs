@@ -32,7 +32,7 @@ two = 2
 -- should take one argument and return it multiplied by two.
 
 double :: Integer -> Integer
-double x = 2 * x
+double = (* 2)
 
 ------------------------------------------------------------------------------
 -- Ex 3: define the function quadruple that uses the function double
@@ -40,7 +40,7 @@ double x = 2 * x
 -- four.
 
 quadruple :: Integer -> Integer
-quadruple x = double $ double x
+quadruple = (* 4)
 
 ------------------------------------------------------------------------------
 -- Ex 4: define the function distance. It should take four arguments of
@@ -56,10 +56,10 @@ quadruple x = double $ double x
 --   distance 0 0 1 1  ==>  1.4142135...
 --   distance 1 1 4 5  ==>  5.0
 distance :: Double -> Double -> Double -> Double -> Double
-distance x y z w = sqrt $ x_diff + y_diff
+distance x y z w = sqrt $ dx ^ 2 + dy ^ 2
   where
-    x_diff = (x - z) ^ 2
-    y_diff = (y - w) ^ 2
+    dx = x - z
+    dy = y - w
 
 ------------------------------------------------------------------------------
 -- Ex 5: define the function eeny that returns "eeny" for even inputs
@@ -94,7 +94,7 @@ checkPassword password
 postagePrice :: Int -> Int
 postagePrice weight
   | weight > 5000 = 6000
-  | weight > 500 = 300 + 1 * weight
+  | weight > 500 = 300 + weight
   | otherwise = 250
 
 ------------------------------------------------------------------------------
@@ -106,8 +106,7 @@ postagePrice weight
 -- Ps. remember, the type of booleans in haskell is Bool
 
 isZero :: Integer -> Bool
-isZero 0 = True
-isZero _ = False
+isZero = (== 0)
 
 ------------------------------------------------------------------------------
 -- Ex 9: implement using recursion a function sumTo such that
@@ -123,10 +122,9 @@ sumTo n = sum [1 .. n]
 
 power :: Integer -> Integer -> Integer
 power _ 0 = 1
-power 0 _ = 0
 power n k
-  | even k = power (n * n) (div k 2)
-  | otherwise = n * power (n * n) (div (k - 1) 2)
+  | even k = power (n * n) (k `div` 2)
+  | otherwise = n * power (n * n) ((k - 1) `div` 2)
 
 ------------------------------------------------------------------------------
 -- Ex 11: ilog3 n should be the number of times you can divide given
